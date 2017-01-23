@@ -6,8 +6,9 @@ if [ $# != 2 ]; then #Check the arguments
     exit 1
 fi
 
-if [ ! -d "$1" ]; then #Check to make sure it's a legit file
-  echo "The directory/file for the VPN Config doesn't exist. Sorry"
+if [ ! -f "$1" ]; then #Check to make sure it's a legit file
+  echo "The file for the VPN Config doesn't exist. Sorry"
+  echo "$1"
   exit 1
 fi
 
@@ -54,4 +55,4 @@ ip netns exec vpn iptables -A OUTPUT -o vpn1 -j DROP #Drop any other traffic
 
 ip netns exec vpn openvpn --config ${vpn_config} & #Start openvpn in the net space
 while ! ip netns exec vpn ip a show dev tun0 up; do sleep .5; done #While the interface is not up do nothing
-ip netns exec vpn ${process} #Start a command
+ip netns exec vpn sudo -u ${SUDO_USER} ${process} #Start a command
