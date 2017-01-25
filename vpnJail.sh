@@ -21,7 +21,7 @@ fi
 
 vpn_config="$1" 
 process="$2"
-vpn_ip=$(grep "^[^#;]" ${vpn_config} | grep remote | cut -d " " -f2)
+vpn_ip=$(grep "^[^#;]" ${vpn_config} | grep "remote " | cut -d " " -f2)
 
 ip netns del vpn
 ip link del vpn0
@@ -35,7 +35,6 @@ ip link set vpn1 netns vpn up #pass one side to the namespace
 ip addr add 10.200.200.1/24 dev vpn0 #Give the local side an ip
 ip netns exec vpn ip addr add 10.200.200.2/24 dev vpn1 #Give the other side an IP
 ip netns exec vpn ip route add default via 10.200.200.1 dev vpn1 #Route traffic to the other veth
-
 
 iptables -A INPUT \! -i vpn0 -s 10.200.200.0/24 -j DROP #Drop packets to an interface that doesn't exist
 iptables -t nat -A POSTROUTING -s 10.200.200.0/24 -o en+ -j MASQUERADE #Pass stuff to somthing else ?
