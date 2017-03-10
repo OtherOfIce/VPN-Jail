@@ -97,4 +97,4 @@ runCommand("ip netns exec vpn iptables -A OUTPUT -o vpn1 -j DROP ") #Drop any ot
 
 runCommand("ip netns exec vpn openvpn --config ./vpn.ovpn & ") #Start openvpn in the net space
 
-runCommand("ip netns exec vpn sudo -u liam " + process) #Start a command
+runCommand("ip netns exec vpn sudo -u " + os.getenv("SUDO_USER") + " " + process) #Start a command
