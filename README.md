@@ -9,8 +9,8 @@ This script creates a network namespace to run the VPN. The namespace has IP Tab
 Usage
 =====
 
-<pre><code>sudo ./vpnJail.sh vpn.ovpn firefox </code></pre>
-<pre><code>sudo ./vpnJail.sh config_path process </code></pre>
+<pre><code>sudo python3 ./vpnJail.py vpn.ovpn firefox </code></pre>
+<pre><code>sudo python3 ./vpnJail.py config_path process </code></pre>
 
 Installation
 ============
